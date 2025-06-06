@@ -20,6 +20,11 @@ const AlertsSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    frequency: {
+      type: String,
+      enum: ["Everyday", "Weekdays"],
+      required: true,
+    },
     email: {
       type: String,
       required: true,

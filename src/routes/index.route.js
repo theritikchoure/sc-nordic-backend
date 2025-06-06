@@ -2,6 +2,8 @@
 const express = require("express");
 const authRoutes = require("./auth.route");
 const alertsRoutes = require("./alerts.route");
+const powerRoutes = require("./power.route");
+const authMiddleware = require("../middlwares/authMiddleware");
 
 // Create a new router instance using the correct syntax: express.Router()
 const router = express.Router();
@@ -13,7 +15,8 @@ router.get("/health-check", (req, res) => {
 
 
 router.use("/auth", authRoutes);
-router.use("/alerts", alertsRoutes);
+router.use("/alerts", authMiddleware, alertsRoutes);
+router.use("/power", authMiddleware, powerRoutes);
 
 // Export the router so that it can be used in your main app file
 module.exports = router;

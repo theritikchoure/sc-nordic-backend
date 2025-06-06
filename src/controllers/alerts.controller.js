@@ -6,11 +6,26 @@ module.exports = { getAllAlerts, createAlert, deleteAlert };
 // Controller to get all alerts
 async function getAllAlerts(req, res) {
   try {
-    const alerts = await Alert.find(); // Fetch all alerts
+    const page = parseInt(req.query.page) || 1; // default to page 1
+    const limit = parseInt(req.query.limit) || 10; // default to 10 items per page
+    const skip = (page - 1) * limit;
+
+    const [alerts, totalCount] = await Promise.all([
+      Alert.find().skip(skip).limit(limit),
+      Alert.countDocuments(),
+    ]);
 
     res.status(200).json({
       message: "Alerts fetched successfully",
       data: alerts,
+      pagination: {
+        total: totalCount,
+        page,
+        limit,
+        totalPages: Math.ceil(totalCount / limit),
+        hasNextPage: skip + alerts.length < totalCount,
+        hasPrevPage: page > 1,
+      },
     });
   } catch (error) {
     console.error("Error fetching alerts:", error);

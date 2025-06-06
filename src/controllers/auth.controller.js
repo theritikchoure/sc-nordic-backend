@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/users.model");
 const { registerSchema, loginSchema } = require("../validators/authValidator");
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"; // Use env var in prod
+const JWT_SECRET = process.env.JWT_SECRET_KEY || "your_jwt_secret_key"; // Use env var in prod
 
 // Export it
 module.exports = { register, login };

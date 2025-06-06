@@ -13,6 +13,9 @@ const createAlertSchema = z.object({
   value: z.number({
     required_error: "Value is required",
   }),
+  frequency: z.string({
+    required_error: "Value is required",
+  }),
   email: z
     .string({
       required_error: "Email is required",
